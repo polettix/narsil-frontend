@@ -139,13 +139,13 @@ sub get_gathering_matches {
    my $available = dclone($stuff);
    for my $match (@$matches) {
       ($match->{id} = $match->{uri}) =~ s{.*/}{}mxs;
-      if (grep {$_->[0] eq $userid} @{$match->{participants}}) {
+      if (grep {defined($userid) && ($_->[0] eq $userid)} @{$match->{participants}}) {
          $match->{is_participant} = 1;
          push @{$waiting->{matches}}, $match;
       }
       else {
          $match->{opponents} =
-            [grep { $_->[0] ne $userid } @{$match->{participants}}];
+            [grep { !(defined($userid) && ($_->[0] eq $userid)) } @{$match->{participants}}];
          $match->{is_participant} = 0;
          push @{$available->{matches}}, $match;
       }
