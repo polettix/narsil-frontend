@@ -35,8 +35,8 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="6.1285219"
-     inkscape:cx="102.40487"
+     inkscape:zoom="1.286127"
+     inkscape:cx="372.04724"
      inkscape:cy="707.08698"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -603,6 +603,44 @@
        height="5.8741736"
        width="9.1376038"
        id="rect3340"
+       style="fill:#1a1a1a;fill-opacity:1;stroke:none;stroke-width:0.39500001;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:0.395, 0.395;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/poletti/sviluppo/perl/narsil/narsil-fe/www/public/images/battleboat/boat-quattro-east.png"
+       ry="10.031937"
+       rx="25.469706"
+       y="389.38235"
+       x="64.049583"
+       height="20.063873"
+       width="83.063873"
+       id="rect2447"
+       style="opacity:1;fill:#4d4d4d;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.93612581;stroke-linecap:butt;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       style="fill:#1a1a1a;fill-opacity:1;stroke:none;stroke-width:0.39500001;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:0.395, 0.395;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 116.634,392.22679 C 115.87779,392.22679 115.29025,393.10446 115.29025,394.19554 L 115.29025,404.63304 C 115.29025,405.72412 115.87779,406.60178 116.634,406.60179 L 128.25901,406.60179 C 129.01522,406.60179 129.63401,405.72411 129.63401,404.63304 L 129.63401,404.32054 L 138.22776,404.32054 C 138.98397,404.32054 139.60276,404.09976 139.60276,403.85179 L 139.60276,401.50804 C 139.60276,401.26007 138.98398,401.03929 138.22776,401.03929 L 129.63401,401.03929 L 129.63401,397.78929 L 138.07151,397.78929 C 138.82772,397.78929 139.41526,397.56851 139.41526,397.32054 L 139.41526,394.97679 C 139.41526,394.72882 138.82773,394.50804 138.07151,394.50804 L 129.63401,394.50804 L 129.63401,394.19554 C 129.63401,393.10446 129.01523,392.22679 128.25901,392.22679 L 116.634,392.22679 z"
+       id="path2449"
+       inkscape:export-filename="/home/poletti/sviluppo/perl/narsil/narsil-fe/www/public/images/battleboat/boat-quattro-east.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/poletti/sviluppo/perl/narsil/narsil-fe/www/public/images/battleboat/boat-quattro-east.png"
+       ry="0.80568451"
+       rx="0.86863637"
+       y="396.4772"
+       x="101.01272"
+       height="5.8741736"
+       width="9.1376038"
+       id="rect2451"
+       style="fill:#1a1a1a;fill-opacity:1;stroke:none;stroke-width:0.39500001;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:0.395, 0.395;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/poletti/sviluppo/perl/narsil/narsil-fe/www/public/images/battleboat/boat-quattro-east.png"
+       id="path2455"
+       d="M 94.529045,392.22679 C 95.285255,392.22679 95.872795,393.10446 95.872795,394.19554 L 95.872795,404.63304 C 95.872795,405.72412 95.285255,406.60178 94.529045,406.60179 L 82.904035,406.60179 C 82.147825,406.60179 81.529035,405.72411 81.529035,404.63304 L 81.529035,404.32054 L 72.935285,404.32054 C 72.179075,404.32054 71.560285,404.09976 71.560285,403.85179 L 71.560285,401.50804 C 71.560285,401.26007 72.179065,401.03929 72.935285,401.03929 L 81.529035,401.03929 L 81.529035,397.78929 L 73.091535,397.78929 C 72.335325,397.78929 71.747785,397.56851 71.747785,397.32054 L 71.747785,394.97679 C 71.747785,394.72882 72.335315,394.50804 73.091535,394.50804 L 81.529035,394.50804 L 81.529035,394.19554 C 81.529035,393.10446 82.147815,392.22679 82.904035,392.22679 L 94.529045,392.22679 z"
        style="fill:#1a1a1a;fill-opacity:1;stroke:none;stroke-width:0.39500001;stroke-linecap:butt;stroke-miterlimit:4;stroke-dasharray:0.395, 0.395;stroke-dashoffset:0;stroke-opacity:1" />
   </g>
 </svg>
