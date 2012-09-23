@@ -1,0 +1,82 @@
+<h1>Battleship</h1>
+<p><% IF active_player %>It's <% active_player %>'s turn<% ELSE %><% match.winners.0.0 %> won the match<% END %></p>
+
+<div id="battleboat">
+<div id="upper">
+<h2><% upper %>'s field</h2>
+<table style="font-family: courier; border: 1px solid black; border-collapse: collapse">
+<%
+   ofield = expanded_field.$upper;
+   FOR y = [ 0 .. maxy ] ;
+%>
+   <tr>
+<%
+      FOR x = [ 0 .. maxx ] ;
+         cell = ofield.$y.$x;
+%>
+      <td <%IF cell.in_last%>class="in-last"<% END %>><%
+         IF cell.status == 'blank';
+            IF (active_player == user);
+      %><form
+            style="display:inline"
+            action="<% request.uri_for('/move') %>"
+            method="POST">
+         <input type="hidden" name="position" value="<% x %>:<% y %>">
+         <button
+            class="aslink"
+            style="color: blue; font-family: courier"
+            name="match"
+            value="<% matchid %>"><img src="<% request.uri_for('/images/battleboat/aim.png') %>"></button>
+      </form><%
+            ELSE
+      %><img src="<% request.uri_for('/images/battleboat/blank.png') %>"><%
+            END;
+         ELSIF cell.status == 'water';
+      %><img src="<% request.uri_for('/images/battleboat/water.png') %>"><%
+         ELSE
+      %><img src="<% request.uri_for('/images/battleboat/hit.png') %>"><%
+         END; %></td>
+<%
+      END;
+%>
+   </tr>
+<%
+   END;
+%>
+</table>
+</div>
+
+<div id="lower">
+<h2><% lower %>'s field</h2>
+<table style="font-family: courier; border: 1px solid black; border-collapse: collapse">
+<%
+   pfield = expanded_field.$lower;
+   FOR y = [ 0 .. maxy ] ;
+%>
+   <tr>
+<%
+      FOR x = [ 0 .. maxx ] ;
+         cell = pfield.$y.$x;
+%>
+      <td <%IF cell.in_last%>class="in-last"<% END %>><%
+         IF cell.status == 'blank';
+      %><img src="<% request.uri_for('/images/battleboat/blank.png') %>"><%
+         ELSIF cell.status == 'water'
+      %><img src="<% request.uri_for('/images/battleboat/water.png') %>"><%
+         ELSIF cell.status == 'part'
+      %><img src="<% request.uri_for('/images/battleboat/part.png') %>"><%
+         ELSE
+      %><img src="<% request.uri_for('/images/battleboat/hit.png') %>"><%
+         END
+      %></td>
+<%
+      END;
+%>
+   </tr>
+<%
+   END;
+%>
+</table>
+</div>
+</div>
+<!-- pre><% string %></pre -->

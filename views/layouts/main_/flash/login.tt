@@ -1,0 +1,1 @@
+Welcome, <em><% session.user.username %></em>

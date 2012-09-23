@@ -1,0 +1,70 @@
+<h1>Battleship</h1>
+<p>It's <% active_player %>'s turn</p>
+
+<% IF active_player == user %>
+Setup it here...
+
+
+<div id="battleboat">
+<div id="lower">
+<h2><% lower %>'s field</h2>
+<%
+   uri = request.uri_for("/move");
+%>
+<form method="POST" action="<% uri %>">
+<input type="hidden" name="match" value="<% matchid %>">
+<input type="hidden" name="action" value="add-boat">
+<ul>
+<%
+   FOR bname in residual ;
+      uri = request.uri_for("/images/battleboat/${bname}.png");
+%>
+<li><input type="radio" name="boat" value="<% bname %>"<% IF loop.count == 1 %> checked<% END %>><img style="vertical-align: top" src="<% uri %>"></li>
+<%
+   END;
+%>
+</ul>
+
+<table class="battleboat" style="font-family: courier; border: 1px solid black; border-collapse: collapse">
+<%
+   pfield = expanded_field.$lower;
+   FOR iy = [ 0 .. maxy ] ;
+      y = maxy - iy;
+%>
+   <tr>
+<%
+      FOR x = [ 0 .. maxx ] ;
+         cell = pfield.$y.$x;
+%>
+      <td <%IF cell.in_last%>class="in-last"<% END %>><%
+         cstatus = cell.status;
+         uri = request.uri_for("/images/battleboat/${cstatus}.png");
+         IF cstatus == 'blank';
+      %><button
+            class="aslink"
+            style="color: blue; font-family: courier"
+            name="position"
+            value="<% x %>:<% y %>"><img src="<% uri %>"></button>
+      <%
+         ELSE
+      %><img src="<% uri %>"><%
+         END
+      %></td>
+<%
+      END;
+%>
+   </tr>
+<%
+   END;
+%>
+</table>
+
+</form>
+
+
+
+</div>
+
+</div>
+
+<% END %>

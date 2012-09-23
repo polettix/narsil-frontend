@@ -1,0 +1,16 @@
+<ul>
+   <% FOR match = matches.matches;
+         id = match.id;
+         uri = request.uri_for("/match/$id");
+   %>
+      <li><a href="<% uri %>"><% match.game.name %></a>
+      <% IF match.opponents && match.opponents.size > 0 %>
+      vs. <% FOR opponent = match.opponents; GET opponent.0; END %>
+      <%
+         END;
+         IF match.phase == 'gathering' && ! match.is_participant;
+            id = match.id;
+            uri = request.uri_for("/match/joins/$id");
+      %>(<form style="display:inline" action="<% uri %>" method="POST"><button class="aslink">join</button></form>)<% END %></li>
+   <% END %>
+</ul>

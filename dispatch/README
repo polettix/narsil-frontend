@@ -1,0 +1,2 @@
+In original Dancer scaffolding, the two dispatchers in this directory are
+placed into the public directory. Move them if you need to!

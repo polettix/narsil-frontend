@@ -1,0 +1,41 @@
+<% IF session.user %><h1>Hey <% session.user.username %></h1>
+<ul>
+   <li>
+      <form style="display:inline" method="POST"
+         action="<% request.uri_for('/logout') %>">
+      <button class="aslink">Logout</button>
+      </form>
+   </li>
+   <li>
+      <a href="<% request.uri_for('/matches/active') %>">Active matches</a>
+   </li>
+</ul>
+<% ELSE %>
+<h1>Login</h1>
+      <form method="POST" action="<% request.uri_for('/login') %>">
+         username: <input type="text" name="username" value="" /><br />
+         password: <input type="password" name="password" value="" /><br />
+         <input type="hidden" name="uri" value="<% request.uri_for('/') %>">
+         <input type="submit" name="submit" value="enter" />
+      </form>
+<% END %>
+<% IF development %>
+<h1>Login</h1>
+      <form method="POST" action="<% request.uri_for('/login') %>">
+         username: <input type="text" name="username" value="" /><br />
+         password: <input type="password" name="password" value="" /><br />
+         <input type="submit" name="submit" value="enter" />
+      </form>
+<ul>
+<% FOR userid = ['playera', 'playerb', 'polettix'] %>
+<li>
+<form style="display:inline" method="POST"
+   action="<% request.uri_for('/login') %>">
+   <button class="aslink" name="username" value="<% userid %>"><% userid %></button>
+   <input type="hidden" name="password" value="x">
+   <input type="hidden" name="uri" value="<% request.request_uri | html %>">
+</form>
+</li>
+<% END %>
+</ul>
+<% END %>

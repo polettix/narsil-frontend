@@ -1,0 +1,189 @@
+body {
+   margin: 0;
+   padding: 1em;
+   padding-top: 0;
+   background-color: #efe;
+   font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
+   color: #444;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, ul, li {
+   margin: 0;
+   padding: 0.1em;
+}
+
+ul {
+   list-style-position: inside;
+   padding-left: 0.3em;
+}
+
+button.aslink {
+   border: none;
+   background: transparent;
+   padding: 0;
+   margin: 0;
+   cursor: pointer;
+   font-size: 100%;
+}
+
+a, a:visited, button.aslink {
+   color: #03c;
+   text-decoration: none;
+}
+
+a:hover, button.aslink:hover {
+   background-color: #03c;
+   color: white;
+   text-decoration: none;
+}
+
+#header, #navigation, #content-container, #aside, #content, #footer {
+   margin: 0;
+   padding: 0;
+   background-color: #777;
+}
+
+#header {
+   background-color: green;
+   color: white;
+   text-align: center;
+   padding: 0.3em;
+}
+
+#header h1 {
+   border: none;
+}
+
+#navigation {
+   background-color: lightgreen;
+   color: black;
+   padding: 0.3em;
+   height: 1.3em;
+   margin: 2px 0;
+}
+
+#navigation ul {
+   list-style: none;
+   border: none;
+   padding: 0;
+   float:left;
+}
+
+#navigation ul li {
+   display: inline;
+   border: none;
+   padding: 0 0.3em;
+}
+
+#navigation a, #navigation a:visited {
+   border: none;
+   color: #050;
+}
+
+#navigation a:hover {
+   background-color: transparent;
+   color: #080;
+}
+
+#content-container {
+   background-color: white;
+   padding: 0.3em;
+   clear: both;
+}
+
+#aside {
+   background-color: white;
+   width: 10em;
+   float: left;
+   font-size: 83%;
+   padding: 0.3em;
+}
+
+#aside h1 {
+   font-size: 110%;
+}
+
+#aside ul {
+   list-style: none;
+}
+
+#content {
+   background-color: white;
+   padding: 0 0.3em 0 1.3em;
+   margin-left: 8.5em;
+   width: auto;
+}
+
+#footer {
+   background-color: transparent;
+   clear: both;
+   text-align: right;
+   font-size: 83%;
+   padding: 1em;
+}
+
+#footer p {
+   border: none;
+}
+
+ul#flash {
+   list-style-position: inside;
+   list-style: none;
+   background: #f55;
+   border: 5px solid red;
+   padding: 3px;
+}
+
+ul#flash li {
+   display: block;
+   font-weight: bold;
+   padding: 0.3em;
+   margin: 0.1em;
+   text-align: center;
+}
+
+ul#flash li.info {
+   background: lightgreen;
+   color: green;
+}
+
+ul#flash li.warning {
+   background: #fa3;
+   color: #730;
+}
+
+ul#flash li.error {
+   background: #faa;
+   color: #700;
+}
+
+form.logout {
+   display: inline;
+}
+form.logout button {
+   border: none;
+   background: transparent;
+   color: green;
+   font-size: 100%;
+   padding: 0;
+   margin: 0;
+   cursor: pointer;
+}
+
+table.battleboat td {
+   border: 1px solid #ddd;
+   border: 0;
+   padding: 2px;
+   padding: 0;
+}
+
+table.battleboat td.in-last {
+   background-color: orange;
+}
+
+table.battleboat {
+   font-family: courier;
+   border: 1px solid black;
+   border-collapse: collapse;
+   background-color: cyan;
+}

@@ -1,0 +1,2 @@
+<h1>Active Matches</h1>
+<% INCLUDE _matches.tt %>

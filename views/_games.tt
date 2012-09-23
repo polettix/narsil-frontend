@@ -1,0 +1,11 @@
+<ul>
+   <% FOR game = games;
+         id = game.id;
+         uri = request.uri_for("/game/$id");
+   %>
+      <li><a href="<% uri %>"><% game.name %></a><%
+         uri = request.uri_for("/match");
+      %>
+      (<form style="display:inline" method="POST" action="<% uri %>"><button class="aslink">play</button><input type="hidden" name="game" value="<% game.id %>"></form>)</li>
+   <% END %>
+</ul>

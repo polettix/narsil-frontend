@@ -1,0 +1,7 @@
+<h1>Welcome to Narsil!</h1>
+<h2>Active Matches</h2>
+<% INCLUDE _matches.tt matches = matches %>
+<h2>Waiting Matches</h2>
+<% INCLUDE _matches.tt matches = waiting %>
+<h2>Available Matches</h2>
+<% INCLUDE _matches.tt matches = availables %>

@@ -1,0 +1,73 @@
+<h1>Battleship</h1>
+<p><% IF active_player %>It's <% active_player %>'s turn<% ELSE %><% match.winners.0.0 %> won the match<% END %></p>
+
+<div id="battleboat">
+<div id="upper">
+<h2><% upper %>'s field</h2>
+<table class="battleboat">
+<%
+   ofield = expanded_field.$upper;
+   FOR iy = [ 0 .. maxy ] ;
+      y = maxy - iy;
+%>
+   <tr>
+<%
+      FOR x = [ 0 .. maxx ] ;
+         cell = ofield.$y.$x;
+%>
+      <td <%IF cell.in_last%>class="in-last"<% END %>><%
+         IF ((cell.status == 'blank') && (active_player == user));
+      %><form
+            style="display:inline"
+            action="<% request.uri_for('/move') %>"
+            method="POST">
+         <input type="hidden" name="match" value="<% matchid %>">
+         <input type="hidden" name="action" value="fire">
+         <button
+            class="aslink"
+            style="color: blue; font-family: courier"
+            name="position"
+            value="<% x %>:<% y %>"><img src="<% request.uri_for('/images/battleboat/aim.png') %>"></button>
+      </form><%
+         ELSE;
+            cstatus = cell.status;
+            uri = request.uri_for("/images/battleboat/${cstatus}.png");
+      %><img src="<% uri %>"><% END %></td>
+<%
+      END;
+%>
+   </tr>
+<%
+   END;
+%>
+</table>
+</div>
+
+<div id="lower">
+<h2><% lower %>'s field</h2>
+<table class="battleboat">
+<%
+   pfield = expanded_field.$lower;
+   FOR iy = [ 0 .. maxy ] ;
+      y = maxy - iy;
+%>
+   <tr>
+<%
+      FOR x = [ 0 .. maxx ] ;
+         cell = pfield.$y.$x;
+%>
+      <td <%IF cell.in_last%>class="in-last"<% END %>><%
+         cstatus = cell.status;
+         uri = request.uri_for("/images/battleboat/${cstatus}.png");
+      %><img src="<% uri %>"></td>
+<%
+      END;
+%>
+   </tr>
+<%
+   END;
+%>
+</table>
+</div>
+</div>
+<!-- pre><% string %></pre -->
