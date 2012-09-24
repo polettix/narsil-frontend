@@ -171,8 +171,8 @@ form.logout button {
 }
 
 table.battleboat td {
-   border: 1px solid #ddd;
    border: 0;
+   border: 1px solid #777;
    padding: 2px;
    padding: 0;
 }
