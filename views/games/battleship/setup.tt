@@ -1,7 +1,14 @@
 <h1>Battleship</h1>
-<p>It's <% active_player %>'s turn</p>
 
-<% IF active_player == user %>
+Match is in setup phase. The following users are setting up:
+
+<ul>
+<% FOR mover = movers %>
+   <li><% mover %></li>
+<% END %>
+</ul>
+
+<% IF player_is_active %>
 Setup it here...
 
 
