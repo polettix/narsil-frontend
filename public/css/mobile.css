@@ -1,15 +1,22 @@
 body {
    margin: 0;
-   padding: 1em;
+   padding: 0.2em;
    padding-top: 0;
    background-color: #efe;
    font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
    color: #444;
+   width: 238px;
+   font-size: 75%;
 }
 
 h1, h2, h3, h4, h5, h6, p, a, ul, li {
    margin: 0;
    padding: 0.1em;
+}
+
+#header h1 {
+   font-size: 140%;
+   font-family: Monospace;
 }
 
 ul {
@@ -37,7 +44,7 @@ a:hover, button.aslink:hover {
    text-decoration: none;
 }
 
-#header, #navigation, #content-container, #aside, #content, #footer {
+#header, #navigation, #content-container, #content, #footer {
    margin: 0;
    padding: 0;
    background-color: #777;
@@ -75,14 +82,18 @@ a:hover, button.aslink:hover {
    padding: 0 0.3em;
 }
 
-#navigation a, #navigation a:visited {
+#navigation a, #navigation a:visited, #navigation button {
    border: none;
    color: #050;
 }
 
-#navigation a:hover {
+#navigation a:hover, #navigation button.aslink:hover {
    background-color: transparent;
    color: #080;
+}
+
+#navigation form {
+   display: inline;
 }
 
 #content-container {
@@ -91,27 +102,21 @@ a:hover, button.aslink:hover {
    clear: both;
 }
 
-#aside {
-   background-color: white;
-   width: 10em;
-   float: left;
-   font-size: 83%;
-   padding: 0.3em;
-}
-
-#aside h1 {
-   font-size: 110%;
-}
-
-#aside ul {
-   list-style: none;
-}
-
 #content {
    background-color: white;
-   padding: 0 0.3em 0 1.3em;
-   margin-left: 8.5em;
-   width: auto;
+}
+
+#content h2 {
+   font-size: 100%;
+   color: green;
+}
+
+#content h2.gametitle {
+   margin-bottom: 0.5em;
+}
+
+#content p, #content li {
+   font-size: 90%;
 }
 
 #footer {
@@ -186,6 +191,33 @@ table.battleboat {
    border: 1px solid black;
    border-collapse: collapse;
    background-color: cyan;
+}
+
+#battleboat h3 {
+   color: blue;
+   font-size: 100%;
+   text-align: center;
+}
+
+#battleboat div#upper, #battleboat div#lower {
+   margin: 0.6em 0 0 0;
+   float: left;
+}
+
+form.auth {
+   text-align: center;
+}
+
+ul.matches, ul.games {
+   list-style: none;
+}
+
+div.matches h2, div.games h2 {
+   margin: 1em 0 0 0;
+}
+
+div.matches h2.first, div.games h2 {
+   margin: 0;
 }
 
 ul.layouts {

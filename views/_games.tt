@@ -1,4 +1,4 @@
-<ul>
+<ul class="games">
    <% FOR game = games;
          id = game.id;
          uri = request.uri_for("/game/$id");

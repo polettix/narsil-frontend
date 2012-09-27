@@ -1,20 +1,8 @@
-<h1>Battleship</h1>
-
-Match is in setup phase. The following users are setting up:
-
-<ul>
-<% FOR mover = movers %>
-   <li><% mover %></li>
-<% END %>
-</ul>
-
 <% IF player_is_active %>
-Setup it here...
-
+<p>Setup your battle field <% lower %></p>
 
 <div id="battleboat">
 <div id="lower">
-<h2><% lower %>'s field</h2>
 <%
    uri = request.uri_for("/move");
 %>
@@ -73,5 +61,9 @@ Setup it here...
 </div>
 
 </div>
+
+<% ELSE %>
+
+Waiting for <% movers.0 %> to complete setup...
 
 <% END %>

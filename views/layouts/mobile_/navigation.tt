@@ -1,0 +1,11 @@
+<ul>
+<% IF session.user %>
+   <li><strong>Hey <% session.user.username %></strong>
+      <form method="POST" action="<% request.uri_for('/logout') %>">
+         <span style="font-size: 70%">(<button class="aslink">Logout</button>)</span>
+      </form>
+   </li>
+<% END %>
+   <li><a href="<% request.base %>">Home</a></li>
+   <li><a href="<% request.uri_for("/games") %>">Games</a></li>
+</ul>

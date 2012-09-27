@@ -1,1 +1,10 @@
+<% MACRO layoutlink(name) BLOCK %>
+<form class="layout" method="post" action="<% request.uri_for('/layout') %>">
+   <button class="aslink" name="layout" value="<% name | html %>"><% name | html%></button>
+</form>
+<% END %>
+<p class="forlist">Style:</p><ul class="layouts">
+   <li><% layoutlink('normal') %></li>
+   <li><% layoutlink('mobile') %></li>
+</ul>
 <p>Copyright (C) 2012 Flavio Poletti</p>

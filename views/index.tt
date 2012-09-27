@@ -1,4 +1,3 @@
-<h1>Welcome to Narsil!</h1>
 <h2>Active Matches</h2>
 <% INCLUDE _matches.tt matches = matches %>
 <h2>Waiting Matches</h2>

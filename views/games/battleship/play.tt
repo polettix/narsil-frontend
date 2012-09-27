@@ -1,9 +1,7 @@
-<h1>Battleship</h1>
-<p><% IF active_player %>It's <% active_player %>'s turn<% ELSE %><% match.winners.0.0 %> won the match<% END %></p>
+<p><% IF active_player %><strong><% active_player | html %></strong> to move<% ELSE %><strong><% match.winners.0.0 %></strong> won the match<% END %></p>
 
 <div id="battleboat">
 <div id="upper">
-<h2><% upper %>'s field</h2>
 <table class="battleboat">
 <%
    ofield = expanded_field.$upper;
@@ -41,10 +39,11 @@
    END;
 %>
 </table>
+<h3><% upper %></h3>
 </div>
 
 <div id="lower">
-<h2><% lower %>'s field</h2>
+<h3><% lower %></h3>
 <table class="battleboat">
 <%
    pfield = expanded_field.$lower;
@@ -69,5 +68,6 @@
 %>
 </table>
 </div>
+<div style="clear:both"></div>
 </div>
 <!-- pre><% string %></pre -->

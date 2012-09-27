@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=<% settings.charset %>" />
+<title>Narsil - mobile</title>
+<link rel="stylesheet" href="<% request.uri_for('/css/mobile.css') %>" />
+<link rel="shortcut icon" href="<% request.uri_for('/images/favicon.ico') %>" />
+
+</head>
+   <body>
+      <div id="container">
+         <div id="header"><% INCLUDE 'layouts/mobile_/header.tt' %></div>
+         <div id="navigation"><% INCLUDE 'layouts/mobile_/navigation.tt' %></div>
+         <div id="content-container">
+            <div id="content">
+<% IF flash %>
+               <ul id="flash">
+   <%
+      FOR report = flash;
+         class = report.0;
+         name  = report.1;
+   %>
+                     <li class="<% class %>"><% INCLUDE "layouts/mobile_/flash/${name}.tt" %></li>
+   <%
+      END;
+   %>
+               </ul><!-- flash -->
+<% END %>
+               <% content %>
+            </div><!-- content -->
+            <div style="clear:both"></div>
+         </div><!-- content-container -->
+         <div id="footer"><% INCLUDE 'layouts/mobile_/footer.tt' %></div>
+      </div><!-- container -->
+   </body>
+</html>

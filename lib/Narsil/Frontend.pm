@@ -8,18 +8,29 @@ use URI;
 use Try::Tiny;
 use Storable qw< dclone >;
 
+my %layout_name_for = (
+   normal => 'main',
+   mobile => 'mobile',
+);
+
 BEGIN {
+   unshift @INC, qw< /home/poletti/sviluppo/perl/narsil/core/lib >;
+   #die if exists $ENV{DOTCLOUD_ENVIRONMENT};
    unshift @INC, qw< /home/poletti/sviluppo/perl/narsil/core/lib >
-      unless exists $ENV{DOTCLOUD_ENVIRONMENT};
+     unless exists $ENV{DOTCLOUD_ENVIRONMENT};
 }
 
 use Narsil::Authentication;
 setup_authentication(
    authentication_callback => \&authenticate,
-   (exists($ENV{DOTCLOUD_ENVIRONMENT}) ? () : (authorization_callback =>
-     sub {
-      session('user') || session(user => {username => 'polettix'})
-      })),
+   (
+      exists($ENV{DOTCLOUD_ENVIRONMENT}) ? () : (
+         authorization_callback => sub {
+            warning "\n\n\n\n in authorization callback \n\n\n\n";
+            session('user') || session(user => {username => 'polettix'});
+         }
+      )
+   ),
 );
 
 sub user { return session('user') }
@@ -52,7 +63,7 @@ sub rest_call {
       $retval = decode_json($response->content());
    }
    catch {
-      $retval = { error => $_ };
+      $retval = {error => $_};
    };
    return $retval;
 } ## end sub rest_call
@@ -75,22 +86,44 @@ sub authenticate {
    return;
 } ## end sub authenticate
 
+{
+   my $template_sub = \&template;
+   no strict 'refs';
+   no warnings 'redefine';
+   *{'template'} = sub {
+      push @_, {} while @_ < 3;
+      $_[2]->{layout} = session('layout') // 'mobile'
+         unless exists($_[2]->{layout});
+      my $layout = $_[2]->{layout};
+
+      my $te = engine 'template';
+      my $candidate = "$layout/$_[0]";
+      my $path = $te->view($candidate);
+      warning "candidate: $candidate";
+      warning "path: " . ($path // 'undef');
+      splice @_, 0, 1, $candidate if defined($path) && -r $path;
+
+      goto $template_sub;
+   };
+}
+
+
 hook before_template => sub {
    my $tokens = shift;
-   $tokens->{development} = ! exists $ENV{DOTCLOUD_ENVIRONMENT};
+   $tokens->{development} = !exists $ENV{DOTCLOUD_ENVIRONMENT};
 };
 
 get '/' => sub {
-   my $matches    = get_matches_for(user(), 'active');
+   my $matches = get_matches_for(user(), 'active');
    my ($waiting, $availables) = get_gathering_matches(user());
-   my $games      = get_games();
-   my $users      = get_users();
+   my $games = get_games();
+   my $users = get_users();
    return template 'index',
      {
       matches    => $matches,
-      string => to_json($matches),
       availables => $availables,
       waiting    => $waiting,
+      string     => to_json($waiting),
       games      => $games,
       users      => $users
      };
@@ -109,7 +142,7 @@ sub get_games {
    return rest_call(get => '/games');
 }
 
-sub get_gathering_matches {
+sub get_gathering_matches_old {
    return rest_call(get => '/matches/gathering');
 }
 
@@ -135,35 +168,38 @@ sub get_gathering_matches {
       get => "/matches/gathering",
       {user => $userid,}
    );
-   my $matches = delete $stuff->{matches};
-   my $waiting = dclone($stuff);
+   my $matches   = delete $stuff->{matches};
+   my $waiting   = dclone($stuff);
    my $available = dclone($stuff);
    for my $match (@$matches) {
       ($match->{id} = $match->{uri}) =~ s{.*/}{}mxs;
-      if (grep {defined($userid) && ($_->[0] eq $userid)} @{$match->{participants}}) {
+      if (grep { defined($userid) && ($_->[0] eq $userid) }
+         @{$match->{participants}})
+      {
          $match->{is_participant} = 1;
          push @{$waiting->{matches}}, $match;
-      }
+      } ## end if (grep { defined($userid...
       else {
          $match->{opponents} =
-            [grep { !(defined($userid) && ($_->[0] eq $userid)) } @{$match->{participants}}];
+           [grep { !(defined($userid) && ($_->[0] eq $userid)) }
+              @{$match->{participants}}];
          $match->{is_participant} = 0;
          push @{$available->{matches}}, $match;
-      }
-   }
+      } ## end else [ if (grep { defined($userid...
+   } ## end for my $match (@$matches)
    return ($waiting, $available);
-} ## end sub get_available_matches
+} ## end sub get_gathering_matches
 
 sub get_matches_for {
    my ($user, $phase) = @_;
    return {} unless defined $user;
    my $userid = $user->{username};
    $phase //= 'active';
-   my $stuff  = rest_call(
+   my $stuff = rest_call(
       get => "/user/matches/$userid",
       {
          phase => $phase,
-         user => $userid,
+         user  => $userid,
       }
    );
    for my $match (@{$stuff->{matches}}) {
@@ -171,7 +207,7 @@ sub get_matches_for {
       $match->{opponents} =
         [grep { $_->[0] ne $userid } @{$match->{participants}}];
       $match->{movers} = [map { $_->[0] } @{$match->{movers}}];
-   }
+   } ## end for my $match (@{$stuff...
    return $stuff;
 } ## end sub get_matches_for
 
@@ -193,7 +229,7 @@ get '/match/:id' => sub {
    catch {
       warning $_;
    };
-   template $template => {string => to_json($match), %$match};
+   template match => {string => to_json($match), subtemplate => $template , %$match};
 };
 
 post '/match' => sub {
@@ -212,7 +248,7 @@ post '/match' => sub {
    catch {
       warning "caught error during forward: $_";
    };
-   return redirect request.uri_for('/');
+   return redirect request . uri_for('/');
 };
 
 post '/match/joins/:id' => sub {
@@ -273,13 +309,15 @@ get '/game/:id' => sub {
 };
 
 get '/games' => sub {
-   my $games      = get_games();
-   return template 'games',
-     {
-      games      => $games,
-     };
-   
+   my $games = get_games();
+   return template 'games', {games => $games,};
+
 };
 
+post '/layout' => sub {
+   session layout => $layout_name_for{param('layout')} // 'main';
+   flash info => 'layout_set';
+   return redirect request()->referer();
+};
 
 true;

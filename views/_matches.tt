@@ -1,4 +1,4 @@
-<ul>
+<ul class="matches">
    <% FOR match = matches.matches;
          id = match.id;
          uri = request.uri_for("/match/$id");

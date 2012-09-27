@@ -1,0 +1,25 @@
+<% IF session.user %>
+<div class="matches">
+   <% IF matches.matches.size %>
+   <h2 class="first">Active Matches</h2>
+   <% INCLUDE _matches.tt matches = matches %>
+   <% END %>
+   <% IF waiting.matches.size %>
+   <h2>Waiting Matches</h2>
+   <% INCLUDE _matches.tt matches = waiting %>
+   <% END %>
+   <% IF availables.matches.size %>
+   <h2>Available Matches</h2>
+   <% INCLUDE _matches.tt matches = availables %>
+   <% END %>
+</div>
+<% ELSE %>
+   <form class="auth" method="POST" action="<% request.uri_for('/login') %>">
+      username:<input type="text" name="username" value="" />
+      <br />
+      password:<input type="password" name="password" value="" />
+      <br />
+      <input type="hidden" name="uri" value="<% request.uri_for('/') %>">
+      <input type="submit" name="submit" value="enter" />
+   </form>
+<% END %>

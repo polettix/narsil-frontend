@@ -1,0 +1,4 @@
+<h2>Available Games</h2>
+<div class="games">
+<% INCLUDE _games.tt %>
+</div>
