@@ -9,7 +9,7 @@ use Try::Tiny;
 use Storable qw< dclone >;
 
 BEGIN {
-   unshift @INC, qw< /home/poletti/sviluppo/perl/narsil/narsil-core/lib >
+   unshift @INC, qw< /home/poletti/sviluppo/perl/narsil/core/lib >
       unless exists $ENV{DOTCLOUD_ENVIRONMENT};
 }
 
@@ -88,6 +88,7 @@ get '/' => sub {
    return template 'index',
      {
       matches    => $matches,
+      string => to_json($matches),
       availables => $availables,
       waiting    => $waiting,
       games      => $games,
@@ -157,10 +158,11 @@ sub get_matches_for {
    my ($user, $phase) = @_;
    return {} unless defined $user;
    my $userid = $user->{username};
+   $phase //= 'active';
    my $stuff  = rest_call(
       get => "/user/matches/$userid",
       {
-         phase => $phase // 'active',
+         phase => $phase,
          user => $userid,
       }
    );
@@ -168,6 +170,7 @@ sub get_matches_for {
       ($match->{id} = $match->{uri}) =~ s{.*/}{}mxs;
       $match->{opponents} =
         [grep { $_->[0] ne $userid } @{$match->{participants}}];
+      $match->{movers} = [map { $_->[0] } @{$match->{movers}}];
    }
    return $stuff;
 } ## end sub get_matches_for

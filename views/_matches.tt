@@ -11,6 +11,12 @@
          IF match.phase == 'gathering' && ! match.is_participant;
             id = match.id;
             uri = request.uri_for("/match/joins/$id");
-      %>(<form style="display:inline" action="<% uri %>" method="POST"><button class="aslink">join</button></form>)<% END %></li>
+      %>(<form style="display:inline" action="<% uri %>" method="POST"><button class="aslink">join</button></form>)<%
+         END;
+
+         IF match.movers && match.movers.size > 0;
+         %>(<% match.movers.join(", ") %> moving)<%
+         END
+         %></li>
    <% END %>
 </ul>

@@ -9,10 +9,12 @@ use Narsil::Game::BattleShip::Status;
 sub adapt {
    my ($package, $match, $user) = @_;
    my $status = Narsil::Game::BattleShip::Status->new($match->{status});
+
    $status->field_size_y();
    my %retval = (%$status, match => $match, user => $user);
+
    ($retval{matchid} = $match->{uri}) =~ s{.*/}{}mxs;
-   my @players = @{$status->{players}};
+   my @players = map { $_->[0] } @{$match->{participants}};
    push @players, '*undef' while scalar(@players) < 2;
    if (grep { $_ eq $user } @players) {    # user participates
       ($retval{upper}) = grep { $_ ne $user } @players;
@@ -22,8 +24,10 @@ sub adapt {
       @retval{qw< upper lower >} = @players;
    }
 
-   $retval{active_player} =
-     $status->{players}[$status->{current_player_id}];
+   my @movers = map { $_->[0] } @{$match->{movers}};
+   $retval{movers} = \@movers;
+   $retval{active_player} = $movers[0] if @movers == 1;
+   $retval{player_is_active} = grep { $_ eq $user } @movers;
    delete $retval{active_player} if $match->{phase} eq 'terminated';
 
    $retval{maxx} = $retval{field_size_x} - 1;
