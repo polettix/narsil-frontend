@@ -9,13 +9,24 @@
 <form method="POST" action="<% uri %>">
 <input type="hidden" name="match" value="<% matchid %>">
 <input type="hidden" name="action" value="add-boat">
-<ul>
+<ul class="available-boats">
 <%
-   FOR bname in residual ;
+   r = residual;
+   first = 1;
+   WHILE r.size;
+%><li>
+<%
+      bname = r.shift;
       uri = request.uri_for("/images/battleboat/${bname}.png");
 %>
-<li><input type="radio" name="boat" value="<% bname %>"<% IF loop.count == 1 %> checked<% END %>><img style="vertical-align: top" src="<% uri %>"></li>
+<input type="radio" name="boat" value="<% bname %>"<% IF first %> checked<% END %>><img style="vertical-align: top" src="<% uri %>">
 <%
+      first = 0;
+      bname = r.shift;
+      uri = request.uri_for("/images/battleboat/${bname}.png");
+%>
+<input type="radio" name="boat" value="<% bname %>"<% IF loop.count == 1 %> checked<% END %>><img style="vertical-align: top" src="<% uri %>">
+</li><%
    END;
 %>
 </ul>

@@ -234,3 +234,7 @@ p.forlist {
 }
 
 form.layout { display: inline }
+
+#battleboat ul.available-boats {
+   list-style: none;
+}
