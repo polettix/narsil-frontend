@@ -1,2 +1,4 @@
 <h2 class="gametitle"><% game.name %></h2>
+<% IF movers.size > 0 && match.phase != 'terminated' %><p style="margin-bottom: 1em;"><strong><% movers.join(', ') %></strong> to move</p><% END %>
+<% IF winners.size > 0 %><p style="margin-bottom: 1em;"><strong><% winners.join(', ') %></strong> won the match</p><% END %>
 <% INCLUDE $subtemplate %>

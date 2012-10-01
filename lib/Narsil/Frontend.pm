@@ -228,6 +228,8 @@ get '/match/:id' => sub {
    warning Dumper($game);
    my $gameid = $game->{id};
    my $template = "games/$gameid";
+   my @movers = map { $_->[0] } @{$match->{movers}};
+   my @winners = map { $_->[0] } @{$match->{winners}};
    try {
       my $class = "Narsil::Frontend::$gameid";
       (my $package = $class . '.pm') =~ s{(?: :: | ')}{/}gmxs;
@@ -237,7 +239,14 @@ get '/match/:id' => sub {
    catch {
       warning $_;
    };
-   template match => {string => to_json({ %$game, }), subtemplate => $template, %$match, game => $game};
+   template match => {
+      string => to_json({ %$game, }),
+      subtemplate => $template,
+      %$match,
+      game => $game,
+      movers => \@movers,
+      winners => \@winners,
+   };
 };
 
 post '/match' => sub {

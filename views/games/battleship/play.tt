@@ -1,5 +1,3 @@
-<p><% IF active_player %><strong><% active_player | html %></strong> to move<% ELSE %><strong><% match.winners.0.0 %></strong> won the match<% END %></p>
-
 <div id="battleboat">
 <div id="upper">
 <table class="battleboat">
