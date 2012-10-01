@@ -55,7 +55,7 @@ sub rest_uri_for {
 sub rest_call {
    my ($method, $path, $params) = @_;
    my $is_get = uc($method) eq 'GET';
-   my $uri = rest_uri_for($path, ($is_get ? $params : undef));
+   my $uri = $path =~ m{^http} ? $path : rest_uri_for($path, ($is_get ? $params : undef));
    $params = undef if $is_get;
    my $response = agent()->$method($uri, $params ? $params : ());
    my $retval;
@@ -124,6 +124,7 @@ get '/' => sub {
       availables => $availables,
       waiting    => $waiting,
       string     => to_json($waiting),
+      string     => to_json($matches),
       games      => $games,
       users      => $users
      };
@@ -218,10 +219,17 @@ get '/match/:id' => sub {
       get => "/match/$matchid",
       {user => $userid},
    );
-   (my $game = $match->{game}) =~ s{.*/}{}mxs;
-   my $template = "games/$game";
+   warning Dumper($match);
+   my $game = rest_call(
+      get => $match->{game},
+      {user => $userid},
+   );
+   use Data::Dumper;
+   warning Dumper($game);
+   my $gameid = $game->{id};
+   my $template = "games/$gameid";
    try {
-      my $class = "Narsil::Frontend::$game";
+      my $class = "Narsil::Frontend::$gameid";
       (my $package = $class . '.pm') =~ s{(?: :: | ')}{/}gmxs;
       require $package;
       ($match, $template) = $class->adapt($match, $userid);
@@ -229,7 +237,7 @@ get '/match/:id' => sub {
    catch {
       warning $_;
    };
-   template match => {string => to_json($match), subtemplate => $template , %$match};
+   template match => {string => to_json({ %$game, }), subtemplate => $template, %$match, game => $game};
 };
 
 post '/match' => sub {

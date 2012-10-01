@@ -1,3 +1,5 @@
+<pre><% string %></pre>
+
 <% IF session.user %>
 <div class="matches">
    <% IF matches.matches.size %>

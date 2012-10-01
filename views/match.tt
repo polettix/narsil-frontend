@@ -1,2 +1,2 @@
-<h2 class="gametitle">Battleship</h2>
+<h2 class="gametitle"><% game.name %></h2>
 <% INCLUDE $subtemplate %>

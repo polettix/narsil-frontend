@@ -1,3 +1,4 @@
+--- <% string %> ---
 <h2>Active Matches</h2>
 <% INCLUDE _matches.tt matches = matches %>
 <h2>Waiting Matches</h2>
