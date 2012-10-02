@@ -217,20 +217,51 @@ sub class_for {
    return $class;
 }
 
+sub get_match {
+   my ($matchid, @features) = @_;
+   my $match;
+   try {
+      $match   = rest_call(
+         get => "/match/$matchid",
+         {user => user()->{username}, features => \@features},
+      );
+      warning Dumper($match);
+   }
+   catch {
+      warning "error: $_";
+   };
+   return $match;
+}
+
+sub get_game {
+   my ($gameid) = @_;
+   my $game;
+   try {
+      $game = rest_call(
+         get => $gameid,
+         {user => user()->{username}},
+      );
+      warning Dumper($game);
+   }
+   catch {
+      warning: "error: $_";
+   };
+   return $game;
+}
+
 get '/match/:id' => sub {
    my $userid  = user()->{username};
-   my $matchid = param('id');
-   my $match   = rest_call(
-      get => "/match/$matchid",
-      {user => $userid},
-   );
-   warning Dumper($match);
-   my $game = rest_call(
-      get => $match->{game},
-      {user => $userid},
-   );
-   use Data::Dumper;
-   warning Dumper($game);
+
+   my $match = get_match(param('id')) or do {
+      flash => error => no_match => $matchid;
+      return redirect request.uri_for('/');
+   };
+
+   my $game = get_game($match->{game}) or do {
+      flash => error => no_game => $match->{game};
+      return redirect request.uri_for('/');
+   };
+
    my $gameid = $game->{id};
    my $template = "games/$gameid";
    my @movers = map { $_->[0] } @{$match->{movers}};
