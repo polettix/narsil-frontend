@@ -144,10 +144,6 @@ sub get_games {
    return rest_call(get => '/games');
 }
 
-sub get_gathering_matches_old {
-   return rest_call(get => '/matches/gathering');
-}
-
 sub get_available_matches {
    my ($user) = @_;
    my $userid = $user->{username};
