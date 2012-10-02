@@ -222,10 +222,12 @@ sub get_match {
    my ($matchid, @features) = @_;
    my $match;
    try {
-      $match   = rest_call(
+      my $item = rest_call(
          get => "/match/$matchid",
          {user => user()->{username}, features => \@features},
       );
+      die $item->{exception} if exists $match->{exception};
+      $match = $item;
       warning Dumper($match);
    }
    catch {
