@@ -283,10 +283,11 @@ get '/match/:id' => sub {
    template match => {
       string => to_json({ %$game, }),
       subtemplate => $template,
-      %$match,
       game => $game,
       movers => \@movers,
+      shown_movers => \@movers,
       winners => \@winners,
+      %$match,
    };
 };
 
