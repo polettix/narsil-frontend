@@ -254,12 +254,12 @@ get '/match/:id' => sub {
 
    my $matchid = param('id');
    my $match = get_match($matchid) or do {
-      flash => error => no_match => $matchid;
+      flash error => no_match => $matchid;
       return redirect request.uri_for('/');
    };
 
    my $game = get_game($match->{game}) or do {
-      flash => error => no_game => $match->{game};
+      flash error => no_game => $match->{game};
       return redirect request.uri_for('/');
    };
 
