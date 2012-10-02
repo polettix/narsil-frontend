@@ -252,7 +252,8 @@ sub get_game {
 get '/match/:id' => sub {
    my $userid  = user()->{username};
 
-   my $match = get_match(param('id')) or do {
+   my $matchid = param('id');
+   my $match = get_match($matchid) or do {
       flash => error => no_match => $matchid;
       return redirect request.uri_for('/');
    };
