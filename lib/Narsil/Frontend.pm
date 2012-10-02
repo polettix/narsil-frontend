@@ -256,15 +256,18 @@ get '/match/:id' => sub {
    my $userid  = user()->{username};
 
    my $matchid = param('id');
-   my $match = get_match($matchid) or do {
-      flash error => no_match => $matchid;
-      return redirect request.uri_for('/');
+   my ($match, $game);
+   try {
+      $match = get_match($matchid) or do {
+         flash error => no_match => $matchid;
+         die {};
+      };
+      $game = get_game($match->{game}) or do {
+         flash error => no_game => $match->{game};
+         die {};
+      };
    };
-
-   my $game = get_game($match->{game}) or do {
-      flash error => no_game => $match->{game};
-      return redirect request.uri_for('/');
-   };
+   return redirect request()->uri_for('/') unless defined $game;
 
    my $gameid = $game->{id};
    my $template = "games/$gameid";
@@ -304,7 +307,7 @@ post '/match' => sub {
    catch {
       warning "caught error during forward: $_";
    };
-   return redirect request . uri_for('/');
+   return redirect request()->uri_for('/');
 };
 
 post '/match/joins/:id' => sub {
@@ -323,7 +326,7 @@ post '/match/joins/:id' => sub {
    else {
       flash warning => 'join_pending';
    }
-   return redirect '/';
+   return redirect request()->uri_for('/');
 };
 
 post '/move' => sub {
@@ -357,7 +360,7 @@ post '/move' => sub {
    };
 
    #flash info => debug => to_json($move);
-   return redirect "/match/$matchid";
+   return redirect request()->uri_for("/match/$matchid");
 };
 
 get '/game/:id' => sub {
