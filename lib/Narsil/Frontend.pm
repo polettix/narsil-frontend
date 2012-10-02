@@ -226,7 +226,7 @@ sub get_match {
          get => "/match/$matchid",
          {user => user()->{username}, features => \@features},
       );
-      die $item->{exception} if exists $match->{exception};
+      die $item->{exception} if exists $item->{exception};
       $match = $item;
       warning Dumper($match);
    }
