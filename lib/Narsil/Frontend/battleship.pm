@@ -80,6 +80,11 @@ sub build_move {
    return @retval;
 }
 
+sub game {
+   my ($package, $game, $user) = @_;
+   return 'games/battleship/game.tt', {};
+}
+
 1;
 __END__
 

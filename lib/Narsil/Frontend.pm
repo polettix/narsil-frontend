@@ -5,6 +5,7 @@ use Dancer::Plugin::FlashNote qw< flash >;
 use 5.012;
 use LWP::UserAgent;
 use URI;
+use JSON qw< encode_json >;
 use Try::Tiny;
 use Storable qw< dclone >;
 
@@ -212,6 +213,14 @@ sub get_matches_for {
    return $stuff;
 } ## end sub get_matches_for
 
+sub class_for {
+   my ($gameid) = @_;
+   my $class = "Narsil::Frontend::$gameid";
+   (my $package = $class . '.pm') =~ s{(?: :: | ')}{/}gmxs;
+   require $package;
+   return $class;
+}
+
 get '/match/:id' => sub {
    my $userid  = user()->{username};
    my $matchid = param('id');
@@ -231,10 +240,7 @@ get '/match/:id' => sub {
    my @movers = map { $_->[0] } @{$match->{movers}};
    my @winners = map { $_->[0] } @{$match->{winners}};
    try {
-      my $class = "Narsil::Frontend::$gameid";
-      (my $package = $class . '.pm') =~ s{(?: :: | ')}{/}gmxs;
-      require $package;
-      ($match, $template) = $class->adapt($match, $userid);
+      ($match, $template) = class_for($gameid)->adapt($match, $userid);
    } ## end try
    catch {
       warning $_;
@@ -251,9 +257,11 @@ get '/match/:id' => sub {
 
 post '/match' => sub {
    my $gameid = param('game');
+   my $params = params();
    my $match  = rest_call(
       post => '/match',
       {
+         configuration => encode_json($params),
          user => user()->{username},
          game => rest_uri_for("/game/$gameid"),
       },
@@ -323,6 +331,18 @@ post '/move' => sub {
 
 get '/game/:id' => sub {
    my $gameid = param('id');
+   my $userid = user()->{username};
+   my $game = rest_call(get => "/game/$gameid", {user => $userid});
+   my ($template, $params);
+   try {
+      ($template, $params) = class_for($gameid)->game($game, $userid);
+   }
+   catch {
+      warning "caught: $_";
+      flash warn => 'no_game_info' => $game;
+   };
+   return redirect request()->uri_for('/') unless defined $params;
+   return template $template, { user => $userid, game => $game, %$params };
 };
 
 get '/games' => sub {

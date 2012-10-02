@@ -1,0 +1,15 @@
+<style>
+input.chars2 {
+   width: 2em;
+}
+</style>
+<h2><% game.name %></h2>
+<p>The sea war you played when you were a child</p>
+<%
+   uri = request.uri_for('/match');
+%>
+<form method="POST" action="<% uri %>">
+   <input type="hidden" name="game" value="<% game.id  %>">
+   size: <input class="chars2" type="text" id="size" name="size" value="10">
+   <input type="submit" name="" value="play">
+</form>
