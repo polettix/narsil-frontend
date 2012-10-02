@@ -225,7 +225,8 @@ sub get_match {
       my $item = rest_call(
          get => "/match/$matchid",
          {user => user()->{username}, features => \@features},
-      );
+      ) or die "not found";
+      die $item->{error} if exists $item->{error};
       die $item->{exception} if exists $item->{exception};
       $match = $item;
       warning Dumper($match);
@@ -267,7 +268,7 @@ get '/match/:id' => sub {
          die {};
       };
    };
-   return redirect request()->uri_for('/') unless defined $game;
+   return forward('/') unless defined $game;
 
    my $gameid = $game->{id};
    my $template = "games/$gameid";
